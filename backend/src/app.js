@@ -4,7 +4,7 @@ const morgan = require("morgan");
 const helmet = require("helmet");
 const rateLimit = require("express-rate-limit");
 const swaggerUi = require("swagger-ui-express");
-const swaggerSpec = require("./swagger");
+const swaggerSpec = require("./config/swaggerConfig");
 
 const routes = require("./routes");
 const { notFound, errorHandler } = require("./middlewares/error");
