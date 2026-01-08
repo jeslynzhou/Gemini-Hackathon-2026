@@ -1,0 +1,115 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Trading Assistant Backend API",
+    "version": "1.0.0",
+    "description": "Hackathon backend (Binance market data)"
+  },
+  "servers": [
+    { "url": "http://localhost:3001", "description": "Local" }
+  ],
+  "paths": {
+    "/health": {
+      "get": {
+        "summary": "Health check",
+        "responses": {
+          "200": {
+            "description": "Server is up",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": { "ok": { "type": "boolean" } }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/market/price": {
+      "get": {
+        "summary": "Get latest price from Binance",
+        "parameters": [
+          {
+            "name": "symbol",
+            "in": "query",
+            "required": true,
+            "schema": { "type": "string" },
+            "example": "BTCUSDT"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Latest price",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "symbol": { "type": "string" },
+                    "price": { "type": "string" }
+                  }
+                }
+              }
+            }
+          },
+          "400": { "description": "Missing symbol" }
+        }
+      }
+    },
+    "/api/market/klines": {
+      "get": {
+        "summary": "Get candlestick data (klines) from Binance",
+        "parameters": [
+          {
+            "name": "symbol",
+            "in": "query",
+            "required": true,
+            "schema": { "type": "string" },
+            "example": "BTCUSDT"
+          },
+          {
+            "name": "interval",
+            "in": "query",
+            "required": false,
+            "schema": { "type": "string", "default": "1m" },
+            "example": "1m"
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": { "type": "integer", "default": 100 },
+            "example": 5
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Array of candles (simplified)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "openTime": { "type": "number" },
+                      "open": { "type": "string" },
+                      "high": { "type": "string" },
+                      "low": { "type": "string" },
+                      "close": { "type": "string" },
+                      "volume": { "type": "string" },
+                      "closeTime": { "type": "number" }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": { "description": "Missing symbol" }
+        }
+      }
+    }
+  }
+}
