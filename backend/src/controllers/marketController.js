@@ -5,8 +5,9 @@ exports.getMarketPrice = async (req, res, next) => {
     const symbol = (req.query.symbol || "").toUpperCase();
     if (!symbol) return res.status(400).json({ error: "symbol is required" });
 
+    const raw = req.query.raw === "true";
     const data = await getPrice(symbol);
-    res.json(data);
+    res.json(raw ? data.raw : data.normalized);
   } catch (err) {
     next(err);
   }
@@ -20,8 +21,9 @@ exports.getMarketKlines = async (req, res, next) => {
 
     if (!symbol) return res.status(400).json({ error: "symbol is required" });
 
+    const raw = req.query.raw === "true";
     const data = await getKlines({ symbol, interval, limit });
-    res.json(data);
+    res.json(raw ? data.raw : data.normalized);
   } catch (err) {
     next(err);
   }
@@ -32,8 +34,9 @@ exports.getMarketTicker = async (req, res, next) => {
     const symbol = (req.query.symbol || "").toUpperCase();
     if (!symbol) return res.status(400).json({ error: "symbol is required" });
 
+    const raw = req.query.raw === "true";
     const data = await getTicker24h(symbol);
-    res.json(data);
+    res.json(raw ? data.raw : data.normalized);
   } catch (err) {
     next(err);
   }
