@@ -1,6 +1,7 @@
 const axios = require("axios");
+const env = require("../config/env");
 
-const BASE_URL = process.env.BINANCE_BASE_URL || "https://api.binance.com";
+const BASE_URL = env.BINANCE_BASE_URL;
 
 async function getPrice(symbol) {
   const url = `${BASE_URL}/api/v3/ticker/price`;
