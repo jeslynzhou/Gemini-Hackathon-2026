@@ -24,4 +24,17 @@ async function getKlines({ symbol, interval, limit }) {
   }));
 }
 
-module.exports = { getPrice, getKlines };
+async function getTicker24h(symbol) {
+  const url = `${BASE_URL}/api/v3/ticker/24hr`;
+  const res = await axios.get(url, { params: { symbol } });
+  const data = res.data;
+
+  return {
+    symbol: data.symbol,
+    price: data.lastPrice,
+    volume: data.volume,
+    quoteVolume: data.quoteVolume,
+  };
+}
+
+module.exports = { getPrice, getKlines, getTicker24h };

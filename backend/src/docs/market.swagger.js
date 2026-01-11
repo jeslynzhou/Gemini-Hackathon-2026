@@ -43,3 +43,20 @@
  *       200:
  *         description: Array of candles
  */
+
+/**
+ * @swagger
+ * /api/market/ticker:
+ *   get:
+ *     summary: Get 24h ticker data (price + volume) from Binance
+ *     parameters:
+ *       - in: query
+ *         name: symbol
+ *         required: true
+ *         schema:
+ *           type: string
+ *         example: BTCUSDT
+ *     responses:
+ *       200:
+ *         description: 24h ticker data
+ */
